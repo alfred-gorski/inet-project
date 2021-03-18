@@ -32,3 +32,9 @@ air             # use air perform file change auto-detect and rebuild
 #### Browser
 
 open localhost:3000
+
+#### Database
+
+* driver: sqlite3
+* database name: database.db
+* dir ./

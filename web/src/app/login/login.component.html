@@ -1,0 +1,20 @@
+<mat-card>
+  <mat-card-title>Login</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="john@example.com" formControlName="email" required>
+        <mat-icon matSuffix>account_circle</mat-icon>
+        <mat-error *ngIf="form.get('email')!.invalid">{{getErrorMessage('email')}}</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="pwd" [type]="hide ? 'password' : 'text'">
+        <mat-icon matSuffix (click)="hide = !hide" >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <mat-error *ngIf="form.get('pwd')!.invalid">{{getErrorMessage('pwd')}}</mat-error>
+      </mat-form-field>
+      <button mat-raised-button type="submit" color="primary">Login</button>
+    </form>
+  </mat-card-content>
+</mat-card>

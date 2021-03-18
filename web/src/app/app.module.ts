@@ -7,15 +7,28 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from "./material/material.module";
 
+import { FormsModule,ReactiveFormsModule } from "@angular/forms";
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { CartComponent } from './cart/cart.component';
+import { LogoutComponent } from './logout/logout.component';
+
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    LoginComponent,
+    CartComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
