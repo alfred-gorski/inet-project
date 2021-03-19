@@ -18,19 +18,18 @@ import { AdminModule } from './admin/admin.module';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     CartComponent,
+    HomeComponent,
     LogoutComponent,
-    AdminComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    AdminModule,
     FormsModule,
     ReactiveFormsModule,
-    AdminModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
