@@ -5,13 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from "./material/material.module";
+import { MaterialModule } from './material/material.module';
 
-import { FormsModule,ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { CartComponent } from './cart/cart.component';
 import { LogoutComponent } from './logout/logout.component';
-import { AdminComponent } from './admin/admin.component';
 import { AdminModule } from './admin/admin.module';
 
 
@@ -28,7 +27,6 @@ import { AdminModule } from './admin/admin.module';
     BrowserAnimationsModule,
     MaterialModule,
     AdminModule,
-    FormsModule,
     ReactiveFormsModule,
   ],
   providers: [],

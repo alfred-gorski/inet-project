@@ -38,7 +38,7 @@ import { MatTreeModule } from '@angular/material/tree';
 
 
 
-const MaterialComponents = [
+const materialComponents = [
   MatAutocompleteModule,
   MatBadgeModule,
   MatBottomSheetModule,
@@ -78,8 +78,8 @@ const MaterialComponents = [
 
 @NgModule({
   declarations: [],
-  imports: [MaterialComponents],
-  exports: [MaterialComponents]
+  imports: [materialComponents],
+  exports: [materialComponents]
 
 })
 export class MaterialModule { }
