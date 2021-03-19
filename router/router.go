@@ -24,27 +24,9 @@ func SetupRoutes(app *fiber.App) {
 	user.Post("/", handler.CreateUser)
 	user.Patch("/:id", middleware.Protected(), handler.UpdateUser)
 	user.Delete("/:id", middleware.Protected(), handler.DeleteUser)
-}
-
-/*
-	apiGroup := app.Group("/api")
-	{
-		apiGroup.Get("/user", func(c *fiber.Ctx) error {
-			return c.JSON(fiber.Map{"id": 1, "name": "kiyon"})
-		})
-	}
 
 	app.Get("/*", func(c *fiber.Ctx) error {
-		// if err := c.SendFile("public/index.html"); err != nil {
-		// 	c.Next(fiber.ErrInternalServerError)
-		// }
 		return c.SendFile("public/index.html")
 	})
 
-	// for _, route := range app.Routes() {
-	// 	log.Println(route.Method, route.Path)
-	// }
-
-	// Start server on http://localhost:3000
-	log.Fatal(app.Listen(":3000"))
-*/
+}
