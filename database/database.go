@@ -28,11 +28,7 @@ func Config(key string) string {
 // ConnectDB connect to db
 func ConnectDB() {
 	var err error
-	// p := Config("DB_PORT")
-	// port, err := strconv.ParseUint(p, 10, 32)
-	// DB, err = gorm.Open("postgres", fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", Config("DB_HOST"), port, Config("DB_USER"), Config("DB_PASSWORD"), Config("DB_NAME")))
 	DB, err = gorm.Open(sqlite.Open("database.db"), &gorm.Config{})
-	DB.AutoMigrate(&model.User{})
 
 	if err != nil {
 		panic("failed to connect database")

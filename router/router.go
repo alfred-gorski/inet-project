@@ -26,7 +26,7 @@ func SetupRoutes(app *fiber.App) {
 	user.Delete("/:id", middleware.Protected(), handler.DeleteUser)
 
 	app.Get("/*", func(c *fiber.Ctx) error {
-		return c.SendFile("public/index.html")
+		return c.SendFile("web/dist/index.html")
 	})
 
 }
