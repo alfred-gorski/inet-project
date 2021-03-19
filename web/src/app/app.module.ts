@@ -9,18 +9,19 @@ import { MaterialModule } from "./material/material.module";
 
 import { FormsModule,ReactiveFormsModule } from "@angular/forms";
 import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
 import { CartComponent } from './cart/cart.component';
 import { LogoutComponent } from './logout/logout.component';
+import { AdminComponent } from './admin/admin.component';
+import { AdminModule } from './admin/admin.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent,
     CartComponent,
-    LogoutComponent
+    LogoutComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +29,8 @@ import { LogoutComponent } from './logout/logout.component';
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AdminModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
