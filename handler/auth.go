@@ -6,12 +6,10 @@ import (
 	"inet-project/model"
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/dgrijalva/jwt-go/v4"
 	"github.com/gofiber/fiber/v2"
-
-	"gorm.io/gorm"
-
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 // CheckPasswordHash compare password with hash

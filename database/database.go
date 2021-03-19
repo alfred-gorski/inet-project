@@ -2,14 +2,12 @@ package database
 
 import (
 	"fmt"
+	"inet-project/model"
 	"os"
 
+	"github.com/joho/godotenv"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-
-	"inet-project/model"
-
-	"github.com/joho/godotenv"
 )
 
 // DB gorm connector
