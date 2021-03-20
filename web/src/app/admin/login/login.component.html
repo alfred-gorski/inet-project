@@ -1,15 +1,26 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-form-field appearance="fill">
     <mat-label>Email</mat-label>
-    <input matInput placeholder="john@example.com" formControlName="email" required>
+    <input matInput placeholder="john@example.com" formControlName="email">
     <mat-icon matSuffix>account_circle</mat-icon>
-    <mat-error *ngIf="form.get('email')!.invalid">{{getErrorMessage('email')}}</mat-error>
+
+    <div *ngIf="f.email.errors">
+      <mat-error *ngIf="f.email.errors!.required && submitted">Email is required</mat-error>
+      <mat-error *ngIf="f.email.errors!.email">Not a valid email</mat-error>
+    </div>
+
   </mat-form-field>
+
   <mat-form-field appearance="fill">
     <mat-label>Password</mat-label>
-    <input matInput formControlName="pwd" [type]="hide ? 'password' : 'text'">
-    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    <mat-error *ngIf="form.get('pwd')!.invalid">{{getErrorMessage('pwd')}}</mat-error>
+    <input matInput formControlName="password" type="password">
+    <mat-icon matSuffix>visibility_off</mat-icon>
+
+    <div *ngIf="f.password.errors">
+      <mat-error *ngIf="f.password.errors!.required && submitted">Password is required</mat-error>
+      <mat-error *ngIf="f.password.errors!.minlength">Password must be at least 6 characters</mat-error>
+    </div>
+
   </mat-form-field>
   <button mat-raised-button type="submit" color="primary">Login</button>
 </form>

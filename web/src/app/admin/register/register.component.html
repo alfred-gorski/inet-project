@@ -1,32 +1,44 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
   <mat-form-field appearance="fill">
+    <mat-label>First Name</mat-label>
+    <input matInput placeholder="John" formControlName="firstname">
+    <mat-error *ngIf="f.firstname.errors">First Name is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Last Name</mat-label>
+    <input matInput placeholder="Snow" formControlName="lastname">
+    <mat-error *ngIf="f.lastname.errors">Last Name is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
     <mat-label>User Name</mat-label>
-    <input matInput placeholder="John" formControlName="username" required>
-    <mat-icon matSuffix>account_circle</mat-icon>
-    <mat-error *ngIf="form.get('username')!.invalid">{{getErrorMessage('username')}}</mat-error>
+    <input matInput placeholder="John" formControlName="username">
+    <mat-error *ngIf="f.username.errors">User Name is required</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Email</mat-label>
     <input matInput placeholder="john@example.com" formControlName="email" required>
-    <mat-icon matSuffix>account_circle</mat-icon>
-    <mat-error *ngIf="form.get('email')!.invalid">{{getErrorMessage('email')}}</mat-error>
+    <div *ngIf="f.email.errors">
+      <mat-error *ngIf="f.email.errors!.required && submitted">Email is required</mat-error>
+      <mat-error *ngIf="f.email.errors!.email">Not a valid email</mat-error>
+    </div>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Password</mat-label>
-    <input matInput formControlName="pwd" [type]="hide ? 'password' : 'text'">
+    <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
     <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    <mat-error *ngIf="form.get('pwd')!.invalid">{{getErrorMessage('pwd')}}</mat-error>
+    <div *ngIf="f.password.errors">
+      <mat-error *ngIf="f.password.errors!.required && submitted">Password is required</mat-error>
+      <mat-error *ngIf="f.password.errors!.minlength">Password must be at least 6 characters</mat-error>
+    </div>
+
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Name</mat-label>
-    <input matInput placeholder="John Snow" formControlName="name" required>
-    <mat-icon matSuffix>account_circle</mat-icon>
-    <mat-error *ngIf="form.get('name')!.invalid">{{getErrorMessage('name')}}</mat-error>
-  </mat-form-field>
+
 
   <button mat-raised-button type="submit" color="primary">Login</button>
 </form>
