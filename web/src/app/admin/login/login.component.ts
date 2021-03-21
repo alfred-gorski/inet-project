@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { AccountService } from '@app/service/account.service';
 
+import { first } from 'rxjs/operators';
 
 
 @Component({
@@ -12,10 +14,14 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 export class LoginComponent implements OnInit {
   form!: FormGroup;
-  // loading = false;
+  loading = false;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private accountService: AccountService
+
+  ) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -36,6 +42,13 @@ export class LoginComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+    this.loading = true;
+    this.accountService.login(this.f.email.value, this.f.password.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          console.log(data);
+        });
   }
 
 

@@ -6,6 +6,7 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 
 import { User } from '@app/model/user';
 import { AccountService } from '@app/service/account.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -50,7 +51,9 @@ export class RegisterComponent implements OnInit {
 
     this.loading = true;
 
-    this.accountService.register(this.form.value).subscribe(data =>{
+    this.accountService.register(this.form.value)
+      .pipe(first())
+      .subscribe(data => {
         console.log(data);
       });
 

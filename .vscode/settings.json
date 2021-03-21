@@ -2,4 +2,12 @@
   "eslint.workingDirectories": [
     "web"
   ],
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "database",
+      "database": "${workspaceFolder:inet-project}/database.db"
+    }
+  ],
 }

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { User } from '@app/model/user';
 import { environment } from '@environments/environment';
 
@@ -24,6 +24,16 @@ export class AccountService {
 
 
   register(user: User): Observable<User> {
-    return this.http.post<User>(`${environment.apiUrl}/api/user`, user);
+    return this.http.post<User>(`${environment.apiUrl}/user`, user);
+  }
+
+  login(email: string, password: string): Observable<User> {
+    return this.http.post<User>(`${environment.apiUrl}/auth/login`, { email, password })
+      .pipe(map(user => {
+        localStorage.setItem('user', JSON.stringify(user));
+        this.userSubject.next(user);
+        return user;
+      }));
+
   }
 }
