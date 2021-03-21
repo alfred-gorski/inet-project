@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HomeComponent } from "./home/home.component";
-import { CartComponent } from "./cart/cart.component";
-import { LogoutComponent } from "./logout/logout.component";
+import { HomeComponent } from './home/home.component';
+import { CartComponent } from './cart/cart.component';
+import { LogoutComponent } from './logout/logout.component';
 import { AdminComponent } from './admin/admin.component';
 
 

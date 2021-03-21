@@ -11,12 +11,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { CartComponent } from './cart/cart.component';
 import { LogoutComponent } from './logout/logout.component';
-import { AdminModule } from './admin/admin.module';
+import { AdminComponent } from './admin/admin.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    AdminComponent,
     CartComponent,
     HomeComponent,
     LogoutComponent,
@@ -26,7 +27,6 @@ import { AdminModule } from './admin/admin.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    AdminModule,
     ReactiveFormsModule,
   ],
   providers: [],

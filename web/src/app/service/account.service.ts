@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { User } from '@app/model/user';
 import { environment } from '@environments/environment';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -11,15 +12,16 @@ import { environment } from '@environments/environment';
 })
 
 export class AccountService {
-  public user!: Observable<User>;
-  private userSubject!: BehaviorSubject<User>;
+  public user!: Observable<User | null>;
+  private userSubject!: BehaviorSubject<User | null>;
 
 
-  constructor(private http: HttpClient) {
-    if (typeof localStorage.getItem('user') === 'string') {
-      this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user') as string));
-      this.user = this.userSubject.asObservable();
-    }
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {
+    this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user') as string));
+    this.user = this.userSubject.asObservable();
   }
 
 
@@ -34,6 +36,11 @@ export class AccountService {
         this.userSubject.next(user);
         return user;
       }));
+  }
 
+  logout() {
+    localStorage.removeItem('user');
+    this.userSubject.next(null);
+    this.router.navigate(['/logout']);
   }
 }
