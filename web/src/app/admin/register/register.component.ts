@@ -1,6 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+
+
+import { User } from '@app/model/user';
+import { AccountService } from '@app/service/account.service';
 
 @Component({
   selector: 'app-register',
@@ -9,11 +14,16 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 })
 export class RegisterComponent implements OnInit {
   form!: FormGroup;
-  // loading =false;
+  loading = false;
   submitted = false;
   hide = true;
+  data: any;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private accountService: AccountService,
+    private http: HttpClient
+  ) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -37,6 +47,12 @@ export class RegisterComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
+
+    this.loading = true;
+
+    this.accountService.register(this.form.value).subscribe(data =>{
+        console.log(data);
+      });
 
   }
 

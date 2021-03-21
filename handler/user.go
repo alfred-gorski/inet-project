@@ -92,7 +92,8 @@ func CreateUser(c *fiber.Ctx) error {
 // UpdateUser update user
 func UpdateUser(c *fiber.Ctx) error {
 	type UpdateUserInput struct {
-		Names string `json:"names"`
+		FirstName string `json:"firstName"`
+		LastName  string `json:"lastName"`
 	}
 	var uui UpdateUserInput
 	if err := c.BodyParser(&uui); err != nil {
@@ -109,7 +110,8 @@ func UpdateUser(c *fiber.Ctx) error {
 	var user model.User
 
 	db.First(&user, id)
-	user.Names = uui.Names
+	user.FirstName = uui.FirstName
+	user.LastName = uui.LastName
 	db.Save(&user)
 
 	return c.JSON(fiber.Map{"status": "success", "message": "User successfully updated", "data": user})
