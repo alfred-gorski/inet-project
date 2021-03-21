@@ -13,6 +13,8 @@ import { HomeComponent } from './home/home.component';
 import { CartComponent } from './cart/cart.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AdminComponent } from './admin/admin.component';
+import { RegisterComponent } from './admin/register/register.component';
+import { LoginComponent } from './admin/login/login.component';
 
 
 @NgModule({
@@ -22,6 +24,8 @@ import { AdminComponent } from './admin/admin.component';
     CartComponent,
     HomeComponent,
     LogoutComponent,
+    RegisterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

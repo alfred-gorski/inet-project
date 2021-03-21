@@ -1,71 +1,11 @@
 <mat-card>
   <mat-card-content>
-    <mat-tab-group dynamicHeight>
-      
+    <mat-tab-group #tabGroup dynamicHeight>
       <mat-tab label="Login">
-         <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
-          <mat-form-field appearance="fill">
-            <mat-label>Email</mat-label>
-            <input matInput placeholder="john@example.com" formControlName="email">
-            <mat-icon matSuffix>account_circle</mat-icon>
-            <mat-error *ngIf="loginF.email.errors?.required && submitted">Email is required</mat-error>
-            <mat-error *ngIf="loginF.email.errors?.email">Not a valid email</mat-error>
-        
-          </mat-form-field>
-        
-          <mat-form-field appearance="fill">
-            <mat-label>Password</mat-label>
-            <input matInput formControlName="password" type="password">
-            <mat-icon matSuffix>visibility_off</mat-icon>
-            <mat-error *ngIf="loginF.password.errors?.required && submitted">Password is required</mat-error>
-            <mat-error *ngIf="loginF.password.errors?.minlength">Password must be at least 6 characters</mat-error>
-          </mat-form-field>
-        
-          <mat-spinner *ngIf="loading" ></mat-spinner>
-          <button mat-raised-button type="submit" color="primary">Login</button>
-        </form>
+        <app-login></app-login>
       </mat-tab>
-
       <mat-tab label="Register">
-
-        <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
-          <mat-form-field appearance="fill">
-            <mat-label>First Name</mat-label>
-            <input matInput placeholder="John" formControlName="firstname">
-            <mat-error *ngIf="registerF.firstname.errors">First Name is required</mat-error>
-          </mat-form-field>
-        
-          <mat-form-field appearance="fill">
-            <mat-label>Last Name</mat-label>
-            <input matInput placeholder="Snow" formControlName="lastname">
-            <mat-error *ngIf="registerF.lastname.errors">Last Name is required</mat-error>
-          </mat-form-field>
-        
-          <mat-form-field appearance="fill">
-            <mat-label>User Name</mat-label>
-            <input matInput placeholder="John" formControlName="username">
-            <mat-error *ngIf="registerF.username.errors">User Name is required</mat-error>
-          </mat-form-field>
-        
-          <mat-form-field appearance="fill">
-            <mat-label>Email</mat-label>
-            <input matInput placeholder="john@example.com" formControlName="email" required>
-            <mat-error *ngIf="registerF.email.errors?.required && submitted">Email is required</mat-error>
-            <mat-error *ngIf="registerF.email.errors?.email">Not a valid email</mat-error>
-          </mat-form-field>
-        
-          <mat-form-field appearance="fill">
-            <mat-label>Password</mat-label>
-            <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
-            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            <mat-error *ngIf="registerF.password.errors?.required && submitted">Password is required</mat-error>
-            <mat-error *ngIf="registerF.password.errors?.minlength">Password must be at least 6 characters</mat-error>
-          </mat-form-field>
-        
-          <mat-spinner *ngIf="loading" ></mat-spinner>
-        
-          <button mat-raised-button type="submit" color="primary">Register</button>
-        </form>
+        <app-register (registSuccessEvent)="tabGroup.selectedIndex=0"></app-register>
       </mat-tab>
     </mat-tab-group>
   </mat-card-content>
