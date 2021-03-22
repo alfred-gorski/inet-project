@@ -15,6 +15,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { AdminComponent } from './admin/admin.component';
 import { RegisterComponent } from './admin/register/register.component';
 import { LoginComponent } from './admin/login/login.component';
+import { httpInterceptorProviders } from './interceptor';
 
 
 @NgModule({
@@ -35,7 +36,7 @@ import { LoginComponent } from './admin/login/login.component';
     MaterialModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

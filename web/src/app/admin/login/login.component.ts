@@ -49,8 +49,8 @@ export class LoginComponent implements OnInit {
     this.accountService.login(this.loginF.email.value, this.loginF.password.value)
       .pipe(first())
       .subscribe(
-        data => {
-          console.log(data);
+        reply => {
+          console.log(reply);
           this.router.navigate(['/']);
           this.loading = false;
         },

@@ -5,6 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { User } from '@app/model/user';
 import { environment } from '@environments/environment';
 import { Router } from '@angular/router';
+import { Reply } from '@app/model/user';
 
 
 @Injectable({
@@ -25,16 +26,16 @@ export class AccountService {
   }
 
 
-  register(user: User): Observable<User> {
-    return this.http.post<User>(`${environment.apiUrl}/user`, user);
+  register(user: User): Observable<Reply<User>> {
+    return this.http.post<Reply<User>>(`${environment.apiUrl}/user`, user);
   }
 
-  login(email: string, password: string): Observable<User> {
-    return this.http.post<User>(`${environment.apiUrl}/auth/login`, { email, password })
-      .pipe(map(user => {
-        localStorage.setItem('user', JSON.stringify(user));
-        this.userSubject.next(user);
-        return user;
+  login(email: string, password: string): Observable<Reply<User>> {
+    return this.http.post<Reply<User>>(`${environment.apiUrl}/auth/login`, { email, password })
+      .pipe(map(reply => {
+        localStorage.setItem('user', JSON.stringify(reply.data));
+        this.userSubject.next(reply.data);
+        return reply;
       }));
   }
 
@@ -42,5 +43,9 @@ export class AccountService {
     localStorage.removeItem('user');
     this.userSubject.next(null);
     this.router.navigate(['/logout']);
+  }
+
+  public get userValue(): User|null {
+    return this.userSubject?.value;
   }
 }

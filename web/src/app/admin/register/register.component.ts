@@ -47,8 +47,8 @@ export class RegisterComponent implements OnInit {
     this.accountService.register(this.registerForm.value)
       .pipe(first())
       .subscribe(
-        data => {
-          console.log(data);
+        reply=> {
+          console.log(reply);
           this.loading = false;
           this.registSuccessEvent.emit();
         },

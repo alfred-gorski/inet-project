@@ -37,42 +37,31 @@ func Login(c *fiber.Ctx) error {
 		Email    string `json:"email"`
 		Password string `json:"password"`
 	}
-	type UserData struct {
-		ID       uint   `json:"id"`
-		Email    string `json:"email"`
-		Password string `json:"password"`
-	}
-	var input LoginInput
-	var ud UserData
 
-	if err := c.BodyParser(&input); err != nil {
+	var loginInput LoginInput
+
+	if err := c.BodyParser(&loginInput); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "error", "message": "Error on login request", "data": err})
 	}
 
-	email, err := getUserByEmail(input.Email)
+	user, err := getUserByEmail(loginInput.Email)
 	if err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "error", "message": "Error on email", "data": err})
 	}
 
-	if email == nil {
+	if user == nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "error", "message": "User not found", "data": err})
 	}
 
-	ud = UserData{
-		ID:       email.ID,
-		Email:    email.Email,
-		Password: email.Password,
-	}
-
-	if !CheckPasswordHash(input.Password, ud.Password) {
+	if !CheckPasswordHash(loginInput.Password, user.Password) {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "error", "message": "Invalid password", "data": nil})
 	}
 
 	token := jwt.New(jwt.SigningMethodHS256)
 
 	claims := token.Claims.(jwt.MapClaims)
-	claims["email"] = ud.Email
-	claims["user_id"] = ud.ID
+	claims["email"] = user.Email
+	claims["user_id"] = user.ID
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	t, err := token.SignedString([]byte(database.Config("SECRET")))
@@ -80,5 +69,13 @@ func Login(c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
-	return c.JSON(fiber.Map{"status": "success", "message": "Success login", "data": t})
+	userData := model.UserData{
+		ID:        user.ID,
+		Email:     user.Email,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		Token:     t,
+	}
+
+	return c.JSON(fiber.Map{"status": "success", "message": "Success login", "data": userData})
 }

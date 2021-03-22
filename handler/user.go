@@ -58,9 +58,6 @@ func GetUser(c *fiber.Ctx) error {
 
 // CreateUser new user
 func CreateUser(c *fiber.Ctx) error {
-	type NewUser struct {
-		Email string `json:"email"`
-	}
 
 	db := database.DB
 	user := new(model.User)
@@ -80,11 +77,14 @@ func CreateUser(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Couldn't create user", "data": err})
 	}
 
-	newUser := NewUser{
-		Email: user.Email,
+	userData := model.UserData{
+		ID:        user.ID,
+		Email:     user.Email,
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
 	}
 
-	return c.JSON(fiber.Map{"status": "success", "message": "Created user", "data": newUser})
+	return c.JSON(fiber.Map{"status": "success", "message": "Created user", "data": userData})
 }
 
 // UpdateUser update user

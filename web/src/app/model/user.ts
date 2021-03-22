@@ -4,7 +4,7 @@ export class User {
   password: string;
   firstName: string;
   lastName: string;
-  token: string;
+  token!: string;
 
   constructor() {
     this.id = '';
@@ -15,3 +15,21 @@ export class User {
     this.token = '';
   }
 }
+
+export class Product {
+  title: string;
+  description: string;
+  amount: string;
+  constructor() {
+    this.title = '';
+    this.description = '';
+    this.amount = '';
+  }
+}
+
+export class Reply<T> {
+  status!: 'success' | 'error';
+  message!: string;
+  data!: T;
+}
+
