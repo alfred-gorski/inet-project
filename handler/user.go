@@ -35,7 +35,7 @@ func validUser(id string, p string) bool {
 	db := database.DB
 	var user model.User
 	db.First(&user, id)
-	if user.Username == "" {
+	if user.Email == "" {
 		return false
 	}
 	if !CheckPasswordHash(p, user.Password) {
@@ -50,7 +50,7 @@ func GetUser(c *fiber.Ctx) error {
 	db := database.DB
 	var user model.User
 	db.Find(&user, id)
-	if user.Username == "" {
+	if user.Email == "" {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"status": "error", "message": "No user found with ID", "data": nil})
 	}
 	return c.JSON(fiber.Map{"status": "success", "message": "Product found", "data": user})
@@ -59,8 +59,7 @@ func GetUser(c *fiber.Ctx) error {
 // CreateUser new user
 func CreateUser(c *fiber.Ctx) error {
 	type NewUser struct {
-		Username string `json:"username"`
-		Email    string `json:"email"`
+		Email string `json:"email"`
 	}
 
 	db := database.DB
@@ -82,8 +81,7 @@ func CreateUser(c *fiber.Ctx) error {
 	}
 
 	newUser := NewUser{
-		Email:    user.Email,
-		Username: user.Username,
+		Email: user.Email,
 	}
 
 	return c.JSON(fiber.Map{"status": "success", "message": "Created user", "data": newUser})

@@ -12,12 +12,6 @@
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>User Name</mat-label>
-    <input matInput placeholder="John" formControlName="username">
-    <mat-error *ngIf="registerF.username.errors">User Name is required</mat-error>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
     <mat-label>Email</mat-label>
     <input matInput placeholder="john@example.com" formControlName="email" required>
     <mat-error *ngIf="registerF.email.errors?.required && submitted">Email is required</mat-error>
