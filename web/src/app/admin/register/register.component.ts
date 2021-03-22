@@ -46,12 +46,16 @@ export class RegisterComponent implements OnInit {
 
     this.accountService.register(this.registerForm.value)
       .pipe(first())
-      .subscribe(data => {
-        this.loading = false;
-        console.log(data);
-        this.registSuccessEvent.emit();
-      });
-
+      .subscribe(
+        data => {
+          console.log(data);
+          this.loading = false;
+          this.registSuccessEvent.emit();
+        },
+        error => {
+          console.log(error);
+          this.loading = false;
+        });
   }
 
 }
