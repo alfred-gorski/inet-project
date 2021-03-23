@@ -2,47 +2,12 @@ package handler
 
 import (
 	"inet-project/database"
+	"inet-project/helper"
 	"inet-project/model"
-	"strconv"
 
 	"github.com/form3tech-oss/jwt-go"
 	"github.com/gofiber/fiber/v2"
-	"golang.org/x/crypto/bcrypt"
 )
-
-func hashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
-	return string(bytes), err
-}
-
-func validToken(t *jwt.Token, id string) bool {
-	n, err := strconv.Atoi(id)
-	if err != nil {
-		return false
-	}
-
-	claims := t.Claims.(jwt.MapClaims)
-	uid := int(claims["user_id"].(float64))
-
-	if uid != n {
-		return false
-	}
-
-	return true
-}
-
-func validUser(id string, p string) bool {
-	db := database.DB
-	var user model.User
-	db.First(&user, id)
-	if user.Email == "" {
-		return false
-	}
-	if !CheckPasswordHash(p, user.Password) {
-		return false
-	}
-	return true
-}
 
 // GetUser get a user
 func GetUser(c *fiber.Ctx) error {
@@ -58,7 +23,6 @@ func GetUser(c *fiber.Ctx) error {
 
 // CreateUser new user
 func CreateUser(c *fiber.Ctx) error {
-
 	db := database.DB
 	user := new(model.User)
 	if err := c.BodyParser(user); err != nil {
@@ -66,7 +30,7 @@ func CreateUser(c *fiber.Ctx) error {
 
 	}
 
-	hash, err := hashPassword(user.Password)
+	hash, err := helper.HashPassword(user.Password)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Couldn't hash password", "data": err})
 
@@ -100,7 +64,7 @@ func UpdateUser(c *fiber.Ctx) error {
 	id := c.Params("id")
 	token := c.Locals("user").(*jwt.Token)
 
-	if !validToken(token, id) {
+	if !helper.ValidToken(token, id) {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Invalid token id", "data": nil})
 	}
 
@@ -117,24 +81,32 @@ func UpdateUser(c *fiber.Ctx) error {
 
 // DeleteUser delete user
 func DeleteUser(c *fiber.Ctx) error {
-	type PasswordInput struct {
-		Password string `json:"password"`
-	}
-	var pi PasswordInput
-	if err := c.BodyParser(&pi); err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Review your input", "data": err})
-	}
-	id := c.Params("id")
-	token := c.Locals("user").(*jwt.Token)
+	/*
+		type PasswordInput struct {
+			Password string `json:"password"`
+		}
+		var pi PasswordInput
+		if err := c.BodyParser(&pi); err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Review your input", "data": err})
+		}
+		id := c.Params("id")
+		token := c.Locals("user").(*jwt.Token)
 
-	if !validToken(token, id) {
+		if !helper.ValidToken(token, id) {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Invalid token id", "data": nil})
+
+		}
+
+		if !helper.ValidUser(id, pi.Password) {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Not valid user", "data": nil})
+
+		}
+
+	*/
+
+	id, err := helper.ValidURLTokenUserID(c)
+	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Invalid token id", "data": nil})
-
-	}
-
-	if !validUser(id, pi.Password) {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Not valid user", "data": nil})
-
 	}
 
 	db := database.DB

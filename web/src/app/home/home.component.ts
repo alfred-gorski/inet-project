@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Product, Reply } from '@app/model/user';
+import { AccountService } from '@app/service/account.service';
 import { environment } from '@environments/environment';
 
 @Component({
@@ -13,7 +14,8 @@ export class HomeComponent implements OnInit {
   data: any;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +32,10 @@ export class HomeComponent implements OnInit {
         this.data = reply;
       }
     );
+  }
+
+  deleteUser(id: number){
+    this.accountService.deleteUser(id).subscribe();
   }
 
 

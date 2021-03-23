@@ -1,39 +1,18 @@
 package handler
 
 import (
-	"errors"
 	"inet-project/database"
+	"inet-project/helper"
 	"inet-project/model"
 	"time"
 
 	"github.com/form3tech-oss/jwt-go"
 	"github.com/gofiber/fiber/v2"
-	"golang.org/x/crypto/bcrypt"
-	"gorm.io/gorm"
 )
 
 // func getUserId(c *fiber.Ctx) error {
 
 // }
-
-// CheckPasswordHash compare password with hash
-func CheckPasswordHash(password, hash string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-	return err == nil
-}
-
-func getUserByEmail(e string) (*model.User, error) {
-	db := database.DB
-	var user model.User
-	if err := db.Where(&model.User{Email: e}).Find(&user).Error; err != nil {
-		// if gorm.IsRecordNotFoundError(err) {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, nil
-		}
-		return nil, err
-	}
-	return &user, nil
-}
 
 // Login get user and password
 func Login(c *fiber.Ctx) error {
@@ -48,7 +27,7 @@ func Login(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"status": "error", "message": "Error on login request", "data": err})
 	}
 
-	user, err := getUserByEmail(loginInput.Email)
+	user, err := helper.GetUserByEmail(loginInput.Email)
 	if err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "error", "message": "Error on email", "data": err})
 	}
@@ -57,7 +36,7 @@ func Login(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "error", "message": "User not found", "data": err})
 	}
 
-	if !CheckPasswordHash(loginInput.Password, user.Password) {
+	if !helper.CheckPasswordHash(loginInput.Password, user.Password) {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "error", "message": "Invalid password", "data": nil})
 	}
 
