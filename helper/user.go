@@ -5,7 +5,6 @@ import (
 	"inet-project/database"
 	"inet-project/model"
 
-	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -20,16 +19,4 @@ func GetUserByEmail(e string) (*model.User, error) {
 		return nil, err
 	}
 	return &user, nil
-}
-
-// Hash return hashed password
-func Hash(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
-	return string(bytes), err
-}
-
-// CheckHash compare password with hash
-func CheckHash(password, hash string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-	return err == nil
 }

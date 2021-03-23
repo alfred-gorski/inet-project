@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"inet-project/auth"
 	"inet-project/database"
 	"inet-project/helper"
 	"inet-project/model"
@@ -36,7 +37,7 @@ func Login(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "error", "message": "User not found", "data": err})
 	}
 
-	if !helper.CheckHash(loginInput.Password, user.Password) {
+	if !auth.CheckHash(loginInput.Password, user.Password) {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"status": "error", "message": "Invalid password", "data": nil})
 	}
 

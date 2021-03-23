@@ -3,7 +3,6 @@ package handler
 import (
 	"inet-project/auth"
 	"inet-project/database"
-	"inet-project/helper"
 	"inet-project/model"
 
 	"github.com/gofiber/fiber/v2"
@@ -30,7 +29,7 @@ func CreateUser(c *fiber.Ctx) error {
 
 	}
 
-	hash, err := helper.Hash(user.Password)
+	hash, err := auth.Hash(user.Password)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Couldn't hash password", "data": err})
 
