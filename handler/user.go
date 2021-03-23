@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"inet-project/auth"
 	"inet-project/database"
 	"inet-project/helper"
 	"inet-project/model"
@@ -52,7 +53,7 @@ func CreateUser(c *fiber.Ctx) error {
 
 // UpdateUser update user
 func UpdateUser(c *fiber.Ctx) error {
-	id, err := helper.ValidURLTokenUserID(c)
+	id, err := auth.ValidURLTokenUserID(c)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Invalid token id", "data": nil})
 	}
@@ -81,7 +82,7 @@ func UpdateUser(c *fiber.Ctx) error {
 
 // DeleteUser delete user
 func DeleteUser(c *fiber.Ctx) error {
-	id, err := helper.ValidURLTokenUserID(c)
+	id, err := auth.ValidURLTokenUserID(c)
 	if err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{"status": "error", "message": "Invalid token id", "data": nil})
 	}
