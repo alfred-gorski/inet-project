@@ -35,7 +35,10 @@ export class HomeComponent implements OnInit {
   }
 
   deleteUser(id: number){
-    this.accountService.deleteUser(id).subscribe();
+    this.accountService.deleteUser(id).subscribe(
+      reply =>{
+        this.data = reply;
+      });
   }
 
 
