@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Product, Reply } from '@app/model/user';
 import { environment } from '@environments/environment';
@@ -26,10 +26,11 @@ export class HomeComponent implements OnInit {
       description: 'description1',
       amount: 1
     }).subscribe(
-      reply =>{
+      reply => {
         this.data = reply;
       }
     );
-
   }
+
+
 }

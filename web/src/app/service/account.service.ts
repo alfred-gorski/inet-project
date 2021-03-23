@@ -45,7 +45,20 @@ export class AccountService {
     this.router.navigate(['/logout']);
   }
 
-  public get userValue(): User|null {
+  deleteUser(id: number, password: string) {
+    const options = {
+      headers: new HttpHeaders({
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        password
+      }
+    };
+    this.http.delete(`${environment.apiUrl}/user/${id}`, options).subscribe();
+  }
+
+  public get userValue(): User | null {
     return this.userSubject?.value;
   }
 }

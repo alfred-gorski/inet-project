@@ -15,7 +15,7 @@ func main() {
 	app.Use(cors.New())
 	app.Use(recover.New())
 	// serve Single Page application on "web/dist"
-	app.Static("/", "web/dist")
+	// app.Static("/", "web/dist")
 
 	database.ConnectDB()
 

@@ -5,7 +5,7 @@ import (
 	"inet-project/model"
 	"strconv"
 
-	"github.com/dgrijalva/jwt-go/v4"
+	"github.com/form3tech-oss/jwt-go"
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
 )

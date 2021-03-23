@@ -1,9 +1,12 @@
 package handler
 
 import (
+	"fmt"
 	"inet-project/database"
 	"inet-project/model"
+	"strconv"
 
+	"github.com/form3tech-oss/jwt-go"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -30,6 +33,10 @@ func GetProduct(c *fiber.Ctx) error {
 
 // CreateProduct new product
 func CreateProduct(c *fiber.Ctx) error {
+	user := c.Locals("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	uid, _ := strconv.ParseUint(fmt.Sprintf("%.0f", claims["user_id"]), 10, 32)
+	fmt.Println(uid)
 	db := database.DB
 	product := new(model.Product)
 	if err := c.BodyParser(product); err != nil {
