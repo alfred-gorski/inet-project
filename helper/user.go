@@ -12,33 +12,17 @@ import (
 	"gorm.io/gorm"
 )
 
+// GetUserByEmail return user with emal
 func GetUserByEmail(e string) (*model.User, error) {
 	db := database.DB
 	var user model.User
 	if err := db.Where(&model.User{Email: e}).Find(&user).Error; err != nil {
-		// if gorm.IsRecordNotFoundError(err) {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil
 		}
 		return nil, err
 	}
 	return &user, nil
-}
-
-func ValidToken(t *jwt.Token, id string) bool {
-	n, err := strconv.Atoi(id)
-	if err != nil {
-		return false
-	}
-
-	claims := t.Claims.(jwt.MapClaims)
-	uid := int(claims["user_id"].(float64))
-
-	if uid != n {
-		return false
-	}
-
-	return true
 }
 
 // ValidURLTokenUserID check if URL id matches Token id. Return userId if matches
@@ -58,27 +42,14 @@ func ValidURLTokenUserID(c *fiber.Ctx) (int, error) {
 	return id, nil
 }
 
-// HashPassword
-func HashPassword(password string) (string, error) {
+// Hash return hashed password
+func Hash(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
 	return string(bytes), err
 }
 
-// CheckPasswordHash compare password with hash
-func CheckPasswordHash(password, hash string) bool {
+// CheckHash compare password with hash
+func CheckHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
-}
-
-func ValidUser(id string, p string) bool {
-	db := database.DB
-	var user model.User
-	db.First(&user, id)
-	if user.Email == "" {
-		return false
-	}
-	if !CheckPasswordHash(p, user.Password) {
-		return false
-	}
-	return true
 }
