@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SignupDTO, UserInfo } from '@app/model/user';
 import { AccountService } from '@app/service/account.service';
 import { first } from 'rxjs/operators';
@@ -20,6 +21,7 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private router: Router,
     private accountService: AccountService
   ) { }
 
@@ -54,6 +56,7 @@ export class SignupComponent implements OnInit {
     this.accountService.signup(input).pipe(first()).subscribe(
       response =>{
         console.log(response);
+        this.router.navigate(['/']);
         this.loading = false;
         this.signupSuccessEvent.emit();
       },

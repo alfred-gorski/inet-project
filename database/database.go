@@ -24,7 +24,7 @@ func Config(key string) string {
 // ConnectDB connect to db
 func ConnectDB() {
 	var err error
-	DB, err = gorm.Open(sqlite.Open(Config("DB_NAME")), &gorm.Config{})
+	DB, err = gorm.Open(sqlite.Open(Config("DB_NAME")), &gorm.Config{PrepareStmt: true})
 
 	if err != nil {
 		fmt.Println("[DATABASE]::CONNECTION_ERROR")
@@ -34,6 +34,7 @@ func ConnectDB() {
 
 }
 
+// Migrate database
 func Migrate(tables ...interface{}) error {
 	return DB.AutoMigrate(tables...)
 }

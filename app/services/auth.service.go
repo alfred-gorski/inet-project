@@ -1,15 +1,20 @@
 package services
 
 import (
+	"encoding/json"
 	"errors"
 	"inet-project/app/dal"
 	"inet-project/app/types"
 	"inet-project/utils/jwt"
 	"inet-project/utils/password"
+	"io/ioutil"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
 )
+
+var defaultRestausData = defaultData("data.json")
 
 // Login service logs in a user
 func Login(c *fiber.Ctx) error {
@@ -70,6 +75,18 @@ func Signup(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusConflict, err.Error.Error())
 	}
 
+	for _, restau := range defaultRestausData {
+		d := &dal.Restau{
+			User:       user.ID,
+			RestauInfo: restau,
+			Favorited:  false,
+		}
+
+		if err := dal.CreateRestau(d).Error; err != nil {
+			return fiber.NewError(fiber.StatusInternalServerError, err.Error())
+		}
+	}
+
 	t, err := jwt.Generate(&jwt.TokenPayload{
 		Email: user.Email,
 		ID:    user.ID,
@@ -87,4 +104,21 @@ func Signup(c *fiber.Ctx) error {
 		},
 		Token: t,
 	})
+}
+
+func defaultData(path string) []dal.RestauInfo {
+	jsonFile, err := os.Open(path)
+	if err != nil {
+		println(err)
+	}
+
+	defer jsonFile.Close()
+
+	b, _ := ioutil.ReadAll(jsonFile)
+
+	var restaus []dal.RestauInfo
+
+	json.Unmarshal([]byte(b), &restaus)
+
+	return restaus
 }
