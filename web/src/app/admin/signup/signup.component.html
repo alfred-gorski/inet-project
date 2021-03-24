@@ -1,29 +1,29 @@
-<form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
+<form [formGroup]="form" (ngSubmit)="onRegisterSubmit()">
   <mat-form-field appearance="fill">
     <mat-label>First Name</mat-label>
     <input matInput placeholder="John" formControlName="firstname">
-    <mat-error *ngIf="registerF.firstname.errors">First Name is required</mat-error>
+    <mat-error *ngIf="f.firstname.errors">First Name is required</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Last Name</mat-label>
     <input matInput placeholder="Snow" formControlName="lastname">
-    <mat-error *ngIf="registerF.lastname.errors">Last Name is required</mat-error>
+    <mat-error *ngIf="f.lastname.errors">Last Name is required</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Email</mat-label>
     <input matInput placeholder="john@example.com" formControlName="email" required>
-    <mat-error *ngIf="registerF.email.errors?.required && submitted">Email is required</mat-error>
-    <mat-error *ngIf="registerF.email.errors?.email">Not a valid email</mat-error>
+    <mat-error *ngIf="f.email.errors?.required && submitted">Email is required</mat-error>
+    <mat-error *ngIf="f.email.errors?.email">Not a valid email</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Password</mat-label>
     <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
     <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    <mat-error *ngIf="registerF.password.errors?.required && submitted">Password is required</mat-error>
-    <mat-error *ngIf="registerF.password.errors?.minlength">Password must be at least 6 characters</mat-error>
+    <mat-error *ngIf="f.password.errors?.required && submitted">Password is required</mat-error>
+    <mat-error *ngIf="f.password.errors?.minlength">Password must be at least 6 characters</mat-error>
   </mat-form-field>
 
   <mat-spinner *ngIf="loading"></mat-spinner>

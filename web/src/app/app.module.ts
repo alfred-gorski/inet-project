@@ -13,9 +13,10 @@ import { HomeComponent } from './home/home.component';
 import { CartComponent } from './cart/cart.component';
 import { LogoutComponent } from './logout/logout.component';
 import { AdminComponent } from './admin/admin.component';
-import { RegisterComponent } from './admin/register/register.component';
 import { LoginComponent } from './admin/login/login.component';
+import { SignupComponent } from './admin/signup/signup.component';
 import { httpInterceptorProviders } from './interceptor';
+
 
 
 @NgModule({
@@ -25,8 +26,8 @@ import { httpInterceptorProviders } from './interceptor';
     CartComponent,
     HomeComponent,
     LogoutComponent,
-    RegisterComponent,
     LoginComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,

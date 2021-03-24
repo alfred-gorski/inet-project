@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Product, Reply } from '@app/model/user';
 import { AccountService } from '@app/service/account.service';
 import { environment } from '@environments/environment';
 
@@ -21,6 +20,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /*
   createProduct() {
 
     this.http.post<Reply<Product>>(`${environment.apiUrl}/product`, {
@@ -40,6 +40,6 @@ export class HomeComponent implements OnInit {
         this.data = reply;
       });
   }
-
+*/
 
 }

@@ -2,7 +2,6 @@ package database
 
 import (
 	"fmt"
-	"inet-project/model"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -25,13 +24,16 @@ func Config(key string) string {
 // ConnectDB connect to db
 func ConnectDB() {
 	var err error
-	DB, err = gorm.Open(sqlite.Open("database.db"), &gorm.Config{})
+	DB, err = gorm.Open(sqlite.Open(Config("DB_NAME")), &gorm.Config{})
 
 	if err != nil {
-		panic("failed to connect database")
+		fmt.Println("[DATABASE]::CONNECTION_ERROR")
+		panic(err)
 	}
-
 	fmt.Println("Connection Opened to Database")
-	DB.AutoMigrate(&model.User{}, &model.Product{})
-	fmt.Println("Database Migrated")
+
+}
+
+func Migrate(tables ...interface{}) error {
+	return DB.AutoMigrate(tables...)
 }

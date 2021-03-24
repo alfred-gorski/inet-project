@@ -2,10 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { User } from '@app/model/user';
+import { AuthResponse, LoginDTO, SignupDTO, User } from '@app/model/user';
 import { environment } from '@environments/environment';
 import { Router } from '@angular/router';
-import { Reply } from '@app/model/user';
 
 
 @Injectable({
@@ -26,26 +25,36 @@ export class AccountService {
   }
 
 
-  register(user: User): Observable<Reply<User>> {
-    return this.http.post<Reply<User>>(`${environment.apiUrl}/user`, user);
+  signup(signupDTO: SignupDTO): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/signup`, signupDTO)
+      .pipe(
+        tap(response => {
+          localStorage.setItem('token', JSON.stringify(response.token));
+          this.userSubject.next(response.user);
+          return response;
+        })
+      );
   }
 
-  login(email: string, password: string): Observable<Reply<User>> {
-    return this.http.post<Reply<User>>(`${environment.apiUrl}/auth/login`, { email, password })
-      .pipe(map(reply => {
-        localStorage.setItem('user', JSON.stringify(reply.data));
-        this.userSubject.next(reply.data);
-        return reply;
-      }));
+  //TODO: get User using token
+
+  login(loginDTO: LoginDTO): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/login`, loginDTO)
+      .pipe(
+        tap(response =>{
+          localStorage.setItem('token', JSON.stringify(response.token));
+          this.userSubject.next(response.user);
+          return response;
+        }));
   }
 
   logout() {
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     this.userSubject.next(null);
     this.router.navigate(['/logout']);
   }
 
-  deleteUser(id: number){
+  deleteUser(id: number) {
     return this.http.delete(`${environment.apiUrl}/user/${id}`);
   }
 

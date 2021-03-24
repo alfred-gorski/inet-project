@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginDTO } from '@app/model/user';
 import { AccountService } from '@app/service/account.service';
 import { first } from 'rxjs/operators';
 
@@ -46,7 +47,9 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.accountService.login(this.loginF.email.value, this.loginF.password.value)
+    const loginDTO = new LoginDTO(this.loginF.email.value,this.loginF.password.value);
+
+    this.accountService.login(loginDTO)
       .pipe(first())
       .subscribe(
         reply => {

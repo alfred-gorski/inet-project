@@ -18,15 +18,15 @@ export class JwtInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-    const user = this.accountService.userValue;
-    const isLoggedIn = user?.token;
+    const token = localStorage.getItem('token');
+    const isLoggedIn = token;
     const isApiUrl = request.url.startsWith(environment.apiUrl);
 
     if (isLoggedIn && isApiUrl) {
       request = request.clone({
           setHeaders: {
               // eslint-disable-next-line @typescript-eslint/naming-convention
-              Authorization: `Bearer ${user?.token}`
+              Authorization: `Bearer ${token}`
           }
       });
   }
