@@ -25,4 +25,7 @@ func SetupRoutes(app *fiber.App) {
 	//TODO: get favorited Restau
 
 	//TODO: image
+	// images := api.Group("/images", middleware.Protected())
+	images := api.Group("/images")
+	images.Get("/:imageAddr", services.GetImage)
 }

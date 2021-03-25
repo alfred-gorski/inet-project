@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
@@ -16,6 +17,7 @@ import { AdminComponent } from './admin/admin.component';
 import { LoginComponent } from './admin/login/login.component';
 import { SignupComponent } from './admin/signup/signup.component';
 import { httpInterceptorProviders } from './interceptor';
+import { RestauCardComponent } from './restau-card/restau-card.component';
 
 
 
@@ -28,6 +30,7 @@ import { httpInterceptorProviders } from './interceptor';
     LogoutComponent,
     LoginComponent,
     SignupComponent,
+    RestauCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +38,7 @@ import { httpInterceptorProviders } from './interceptor';
     BrowserAnimationsModule,
     HttpClientModule,
     MaterialModule,
+    FlexLayoutModule,
     ReactiveFormsModule,
   ],
   providers: [httpInterceptorProviders],

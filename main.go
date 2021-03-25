@@ -18,8 +18,8 @@ func main() {
 	app.Use(cors.New())
 	app.Use(recover.New())
 	app.Use(logger.New())
-	// serve Single Page application on "web/dist"
-	// app.Static("/", "web/dist")
+
+	app.Static("/", "images")
 
 	database.ConnectDB()
 
@@ -27,7 +27,6 @@ func main() {
 	fmt.Println("Database Migrated")
 
 	routes.SetupRoutes(app)
-	// routes.AuthRoutes(app)
 
 	log.Fatal(app.Listen(":3000"))
 }

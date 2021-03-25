@@ -2,6 +2,14 @@
 
 Final project for HTW-Saarland course Internet-Technologien (KIB-INET/PIB-INET).
 
+## Features
+
+* RESTful-API
+* jwt Authentication
+* [Material Design](https://material.io)
+* Persistence using database
+* ORM framework in SQL request
+
 ## How to Build
 
 ### Dependencies
@@ -19,7 +27,7 @@ Final project for HTW-Saarland course Internet-Technologien (KIB-INET/PIB-INET).
 ```shell
 cd inet-project/web
 npm install           # install frontend dependencies
-yarn run build:watch  # compile angular project
+ng serve --open
 ```
 
 #### Backend
@@ -31,7 +39,7 @@ air             # use air perform file change auto-detect and rebuild
 
 #### Browser
 
-open localhost:3000
+open localhost:4200
 
 #### Database
 

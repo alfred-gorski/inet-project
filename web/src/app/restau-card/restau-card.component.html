@@ -1,0 +1,23 @@
+<mat-card class="mat-elevation-z4">
+  <mat-card-header>
+    <mat-card-title>{{restau.restauinfo.title}}</mat-card-title>
+    <mat-card-subtitle>{{restau.restauinfo.type}}</mat-card-subtitle>
+  </mat-card-header>
+
+  
+  <mat-card-content>
+      <!-- TODO: add image aquire authentication -->
+    <img mat-card-image src="{{imageUrl}}/{{restau.restauinfo.image}}">
+    <p>{{restau.restauinfo.description}}</p>
+    <p>{{restau.restauinfo.location}}</p>
+    <p>{{restau.restauinfo.phone}}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-button>
+      <mat-icon>ios_share</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
