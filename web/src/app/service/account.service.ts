@@ -37,8 +37,6 @@ export class AccountService {
       );
   }
 
-  //TODO: get User using token
-
   login(loginDTO: LoginDTO): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.authUrl}/login`, loginDTO)
       .pipe(

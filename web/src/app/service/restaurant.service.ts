@@ -18,7 +18,6 @@ export class RestaurantService {
   ) { }
 
   //TODO: error handling
-  //TODO: image service
   getRestau(id: number): Observable<RestauResponse> {
     const url = `${this.restauUrl}/${id}`;
     return this.http.get<RestauResponse>(url)

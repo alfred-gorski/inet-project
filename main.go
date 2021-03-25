@@ -19,8 +19,6 @@ func main() {
 	app.Use(recover.New())
 	app.Use(logger.New())
 
-	app.Static("/", "images")
-
 	database.ConnectDB()
 
 	database.Migrate(&dal.User{}, &dal.Restau{})

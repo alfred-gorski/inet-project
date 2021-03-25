@@ -22,9 +22,8 @@ func SetupRoutes(app *fiber.App) {
 	restaus.Post("/", services.CreateRestau)
 	restaus.Patch("favorite/:restauID", services.FavoriteRestau)
 	restaus.Delete("/:restauID", services.DeleteRestau)
-	//TODO: get favorited Restau
 
-	//TODO: image
+	//TODO: image authentication
 	// images := api.Group("/images", middleware.Protected())
 	images := api.Group("/images")
 	images.Get("/:imageAddr", services.GetImage)

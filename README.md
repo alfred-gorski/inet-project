@@ -46,3 +46,10 @@ open localhost:4200
 * driver: sqlite3
 * database name: database.db
 * dir ./
+
+## TODOs
+
+* improve URL query parameter
+* make image aquire authorized
+* POST Restaurant page
+  

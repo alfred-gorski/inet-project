@@ -8,9 +8,9 @@
   <mat-card-content>
       <!-- TODO: add image aquire authentication -->
     <img mat-card-image src="{{imageUrl}}/{{restau.restauinfo.image}}">
-    <p>{{restau.restauinfo.description}}</p>
-    <p>{{restau.restauinfo.location}}</p>
-    <p>{{restau.restauinfo.phone}}</p>
+    <div class="mat-small"> {{restau.restauinfo.description}} </div>
+    <div class="mat-body-strong">{{restau.restauinfo.location}}</div>
+    <div class="mat-body">{{restau.restauinfo.phone}}</div>
   </mat-card-content>
   <mat-card-actions>
     <button mat-button (click)="toggleFavorite()">
