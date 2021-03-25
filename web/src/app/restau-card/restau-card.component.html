@@ -13,8 +13,8 @@
     <p>{{restau.restauinfo.phone}}</p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>
-      <mat-icon>favorite</mat-icon>
+    <button mat-button (click)="toggleFavorite()">
+      <mat-icon>{{restau.favorited? 'favorite_border':'favorite'}}</mat-icon>
     </button>
     <button mat-button>
       <mat-icon>ios_share</mat-icon>

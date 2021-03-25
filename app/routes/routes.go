@@ -20,7 +20,7 @@ func SetupRoutes(app *fiber.App) {
 	restaus.Get("/", services.GetRestaus)
 	restaus.Get("/:restauID", services.GetRestau)
 	restaus.Post("/", services.CreateRestau)
-	restaus.Patch("/:restauID", services.FavoriteRestau) //TODO: not RESTful, change to UpdateRestau
+	restaus.Patch("favorite/:restauID", services.FavoriteRestau)
 	restaus.Delete("/:restauID", services.DeleteRestau)
 	//TODO: get favorited Restau
 
