@@ -26,7 +26,8 @@ func main() {
 	database.Migrate(&dal.User{}, &dal.Restau{})
 	fmt.Println("Database Migrated")
 
-	routes.AuthRoutes(app)
+	routes.SetupRoutes(app)
+	// routes.AuthRoutes(app)
 
 	log.Fatal(app.Listen(":3000"))
 }

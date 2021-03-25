@@ -35,13 +35,19 @@ func CreateRestau(c *fiber.Ctx) error {
 
 // GetRestaus returns the Restaus list
 func GetRestaus(c *fiber.Ctx) error {
-	d := &[]types.RestauResponse{}
-	if err := dal.FindRestausByUser(d, utils.GetUserID(c)).Error; err != nil {
+	d := []dal.Restau{}
+	if err := dal.FindRestausByUser(&d, utils.GetUserID(c)).Error; err != nil {
 		return fiber.NewError(fiber.StatusConflict, err.Error())
 	}
-	return c.JSON(&types.RestausResponse{
-		Restaus: d,
-	})
+	r := []types.RestauResponse{}
+	for _, v := range d {
+		r = append(r, types.RestauResponse{
+			ID:         v.ID,
+			RestauInfo: v.RestauInfo,
+			Favorited:  v.Favorited,
+		})
+	}
+	return c.JSON(r)
 }
 
 // GetRestau return a single Restau
@@ -52,13 +58,17 @@ func GetRestau(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusUnprocessableEntity, "Invalid restauID")
 	}
 
-	d := &types.RestauResponse{}
+	d := &dal.Restau{}
 	err := dal.FindRestauByUser(d, restauID, utils.GetUserID(c)).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return c.JSON(&types.RestauResponse{})
 	}
 
-	return c.JSON(d)
+	return c.JSON(&types.RestauResponse{
+		ID:         d.ID,
+		RestauInfo: d.RestauInfo,
+		Favorited:  d.Favorited,
+	})
 }
 
 // DeleteRestau deletes a single todo

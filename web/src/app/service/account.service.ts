@@ -15,6 +15,7 @@ export class AccountService {
   public user!: Observable<User | null>;
   private userSubject!: BehaviorSubject<User | null>;
 
+  private authUrl = `${environment.apiUrl}/auth`;
 
   constructor(
     private http: HttpClient,
@@ -26,10 +27,10 @@ export class AccountService {
 
 
   signup(signupDTO: SignupDTO): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/signup`, signupDTO)
+    return this.http.post<AuthResponse>(`${this.authUrl}/signup`, signupDTO)
       .pipe(
         tap(response => {
-          localStorage.setItem('token', JSON.stringify(response.token));
+          localStorage.setItem('token', response.token);
           this.userSubject.next(response.user);
           return response;
         })
@@ -39,10 +40,10 @@ export class AccountService {
   //TODO: get User using token
 
   login(loginDTO: LoginDTO): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/login`, loginDTO)
+    return this.http.post<AuthResponse>(`${this.authUrl}/login`, loginDTO)
       .pipe(
         tap(response =>{
-          localStorage.setItem('token', JSON.stringify(response.token));
+          localStorage.setItem('token', response.token);
           this.userSubject.next(response.user);
           return response;
         }));
@@ -55,7 +56,7 @@ export class AccountService {
   }
 
   deleteUser(id: number) {
-    return this.http.delete(`${environment.apiUrl}/user/${id}`);
+    return this.http.delete(`${this.authUrl}/${id}`);
   }
 
   public get userValue(): User | null {

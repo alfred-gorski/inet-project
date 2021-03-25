@@ -9,11 +9,6 @@ type RestauResponse struct {
 	Favorited  bool           `json:"favorited"`
 }
 
-// RestausResponse defines the Restaus list
-type RestausResponse struct {
-	Restaus *[]RestauResponse `json:"restaus"`
-}
-
 // FavoriteRestauDTO defined the payload for the favorite Restau
 type FavoriteRestauDTO struct {
 	Favorited bool `json:"favorited"`
