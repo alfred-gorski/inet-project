@@ -36,9 +36,21 @@ func CreateRestau(c *fiber.Ctx) error {
 // GetRestaus returns the Restaus list
 func GetRestaus(c *fiber.Ctx) error {
 	d := []dal.Restau{}
-	if err := dal.FindRestausByUser(&d, utils.GetUserID(c)).Error; err != nil {
-		return fiber.NewError(fiber.StatusConflict, err.Error())
+
+	p := &dal.Restau{}
+	if err := c.QueryParser(p); err != nil {
+		return err
 	}
+	if p.Favorited == true {
+		if err := dal.FindFavoriteRestausByUser(&d, utils.GetUserID(c), true).Error; err != nil {
+			return fiber.NewError(fiber.StatusConflict, err.Error())
+		}
+	} else {
+		if err := dal.FindRestausByUser(&d, utils.GetUserID(c)).Error; err != nil {
+			return fiber.NewError(fiber.StatusConflict, err.Error())
+		}
+	}
+
 	r := []types.RestauResponse{}
 	for _, v := range d {
 		r = append(r, types.RestauResponse{

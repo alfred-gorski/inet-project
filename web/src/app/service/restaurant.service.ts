@@ -33,6 +33,11 @@ export class RestaurantService {
     return this.http.get<RestauResponse[]>(url);
   }
 
+  getFavoritedRestaus(): Observable<RestauResponse[]> {
+    const url = `${this.restauUrl}?favorited=1`;
+    return this.http.get<RestauResponse[]>(url);
+  }
+
   favoriteRestau(id: number, favorite: boolean): Observable<MsgResponse> {
     const url = `${this.restauUrl}/favorite/${id}`;
     return this.http.patch<MsgResponse>(url, { favorited: favorite })

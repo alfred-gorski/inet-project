@@ -44,6 +44,11 @@ func FindRestausByUser(dest interface{}, userIden interface{}) *gorm.DB {
 	return database.DB.Model(&Restau{}).Find(dest, "user = ?", userIden)
 }
 
+// FindFavoriteRestausByUser finds the favorited Restaus with user's identifier given
+func FindFavoriteRestausByUser(dest interface{}, userIden interface{}, favorited interface{}) *gorm.DB {
+	return database.DB.Model(&Restau{}).Find(dest, "user = ? and favorited = ?", userIden, favorited)
+}
+
 // DeleteRestau deletes a Restau from Restaus' table with the given Restau and user identifier
 func DeleteRestau(RestauIden interface{}, userIden interface{}) *gorm.DB {
 	return database.DB.Unscoped().Delete(&Restau{}, "id = ? AND user = ?", RestauIden, userIden)
