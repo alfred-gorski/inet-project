@@ -34,7 +34,7 @@ ng serve --open
 
 ```shell
 cd ..           # go to project root dir
-air             # use air perform file change auto-detect and rebuild 
+go run main.go
 ```
 
 #### Browser
@@ -52,4 +52,8 @@ open localhost:4200
 * improve URL query parameter
 * make image aquire authorized
 * POST Restaurant page
+  
+## Known issues
+
+* Last line of layout is abnormal
   
